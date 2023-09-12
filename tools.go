@@ -38,6 +38,10 @@ func lookKindlegen() string {
 	command := "kindlegen"
 	if runtime.GOOS == "windows" {
 		command = "kindlegen.exe"
+	} else if runtime.GOOS == "linux" {
+		command = "kindlegen"
+	} else if runtime.GOOS == "darwin" {
+		command = "kindlegen-darwin"
 	}
 	kindlegen, err := exec.LookPath(command)
 	if err != nil {
@@ -94,7 +98,7 @@ func getClientID() string {
 		if err != nil {
 			return clientID
 		}
-		_ = os.WriteFile(filepath, []byte(clientID), 0700)
+		_ = ioutil.WriteFile(filepath, []byte(clientID), 0700)
 	}
 	return clientID
 }
